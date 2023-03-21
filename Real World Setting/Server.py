@@ -1,3 +1,16 @@
+#
+#   Created: 2023
+#   Author: Seraphin Zunzer
+#   License: MIT License
+# ---------------------------------------------------------------
+
+
+# Optimized server for real-world dataset.
+# Federated learning server which starts the federated learning process on the clients,
+# receives the newly trained client models,
+# and aggregates them using FedAVG.
+
+
 import numpy as np
 import keras
 import tensorflow as tf
@@ -48,30 +61,6 @@ class SimpleMLP:
             ])
         decoder = Sequential([
             keras.layers.Dense(35, input_shape=(18,)),
-            keras.layers.Dense(DATASET_SIZE),
-            keras.layers.Activation("sigmoid"),
-        ])
-        return encoder, decoder
-
-
-class complexSimpleMLP:
-    """Creates the keras model that is passed to the clients"""
-    @staticmethod
-    def build():
-        encoder = Sequential([
-            keras.layers.Dense(DATASET_SIZE, input_shape=(DATASET_SIZE,)),
-            keras.layers.LeakyReLU(),
-            keras.layers.Dropout(DROPOUT),
-            keras.layers.Dense(65),
-            keras.layers.LeakyReLU(),
-            keras.layers.Dropout(DROPOUT),
-            keras.layers.Dense(43),
-            keras.layers.LeakyReLU()
-        ])
-        decoder = Sequential([
-            keras.layers.Dense(65, input_shape=(33,)),
-            keras.layers.LeakyReLU(),
-            keras.layers.Dropout(DROPOUT),
             keras.layers.Dense(DATASET_SIZE),
             keras.layers.Activation("sigmoid"),
         ])
@@ -197,6 +186,8 @@ def averaged_sum(global_weights, client_weights):
 
 
 # -----------------MAIN LOOP------------------
+
+
 if __name__ == "__main__":
 
     # initialize global model
